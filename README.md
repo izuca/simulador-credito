@@ -1,8 +1,20 @@
 # simulador-credito
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+Projeto do Caixaverso de Backend
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+## Objetivos
+- Receber um envelope JSON, via chamadade API, contendo uma solicitação de simulação de empréstimo
+- Consultar um conjunto de informações  parametrizadas em uma tabela de banco de dados SQL Server
+- Validar os dados de entrada da API com base nos parâmetros de produtos retornados no banco de dados.
+- Filtrar qual produto se adequa aos parâmetros de entrada
+- Retornar cálculos para os sistemas de amortização SAC e PRICE de acordo com dados validados
+- Retornar um envelope JSON contendo o nome do produto valido, e o resultado da simulação utilizando dois sistemas de amortização (SAC e PRICE), gravando este mesmo envelope JSON no EventHub. A Gravação no Eventhub visa simular uma possibilidade de integração com a área de relacionamento com o cliente da empresa, que receberia em poucos segundos este evento de simulação, e estaria apta à execução de estratégia negocial com base na interação do cliente
+- persistir em banco local a simulação realizada
+- Criar um endpoint para retornar todas as simulações realizadas
+- Criar um endpoint para retornar os valores simulados para cada produto em cada dia
+- Criar um endpoint para retornar dados de telemetria com volumes e tempos de resposta para cada serviço
+- Disponibilizar o código fonte, com todas as evidência em .zip
+- Incluir no projeto todos os arquivos para execução via container(dockerfile/ Docker Compose)
 
 ## Running the application in dev mode
 
