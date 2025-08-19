@@ -1,7 +1,11 @@
-package org.acme;
+package org.acme.entity;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import io.smallrye.common.constraint.NotNull;
+import io.smallrye.common.constraint.Nullable;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import lombok.Getter;
+import lombok.Setter;
 
 
 /**
@@ -23,7 +27,28 @@ import jakarta.persistence.Entity;
  *     }
  * }
  */
+@Getter
+@Setter
 @Entity
-public class MyEntity extends PanacheEntity {
-    public String field;
+public class Produto{
+    @Id @NotNull
+    private int coProduto;
+
+    @NotNull
+    private String noProduto;
+
+    @NotNull
+    private double pcTaxaJuros;
+
+    @NotNull
+    public int nuMinimoMeses;
+
+    @Nullable
+    public int nuMaximoMeses;
+
+    @NotNull
+    public double vrMinimo;
+
+    @Nullable
+    public double vrMaximo;
 }
