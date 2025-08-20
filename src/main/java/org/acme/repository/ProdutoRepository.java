@@ -8,7 +8,7 @@ import java.util.List;
 
 @ApplicationScoped
 public class ProdutoRepository implements PanacheRepository<Produto> {
-    public Produto buscaPorId(int idProduto){
+    public Produto buscaPorId(Long idProduto){
         return find("id", idProduto).firstResult();
     }
 

@@ -37,7 +37,7 @@ public class Produto{
     @Id
     @NotNull
     @Column(name = "CO_PRODUTO")
-    private int coProduto;
+    private Long coProduto;
 
     @NotNull
     @Column(name = "NO_PRODUTO")

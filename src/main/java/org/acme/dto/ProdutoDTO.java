@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class ProdutoDTO {
     @JsonProperty("codigoProduto")
-    private int coProduto;
+    private Long coProduto;
 
     @JsonProperty("descricaoProduto")
     private String noProduto;
