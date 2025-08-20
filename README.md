@@ -16,6 +16,8 @@ Projeto do Caixaverso de Backend
 - Disponibilizar o código fonte, com todas as evidência em .zip
 - Incluir no projeto todos os arquivos para execução via container(dockerfile/ Docker Compose)
 
+## Inicializando o projeto
+
 ## Running the application in dev mode
 
 You can run your application in dev mode that enables live coding using:

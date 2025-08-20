@@ -1,8 +1,10 @@
 version: '3.8'
 services:
   sqlserver:
-    image: mcr.microsoft.com/mssql/server:2022-latest
+    build: .
     container_name: sqlserver
+    volumes:
+      - ./mssql-data:/var/opt/mssql
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=${MYSQL_PASSWORD}
