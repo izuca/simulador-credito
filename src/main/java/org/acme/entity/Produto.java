@@ -2,8 +2,10 @@ package org.acme.entity;
 
 import io.smallrye.common.constraint.NotNull;
 import io.smallrye.common.constraint.Nullable;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,25 +32,35 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@Table(name = "PRODUTO")
 public class Produto{
-    @Id @NotNull
+    @Id
+    @NotNull
+    @Column(name = "CO_PRODUTO")
     private int coProduto;
 
     @NotNull
+    @Column(name = "NO_PRODUTO")
     private String noProduto;
 
     @NotNull
+    @Column(name = "PC_TAXA_JUROS")
     private double pcTaxaJuros;
 
     @NotNull
-    public int nuMinimoMeses;
+    @Column(name = "NU_MINIMO_MESES")
+    private int nuMinimoMeses;
 
     @Nullable
-    public int nuMaximoMeses;
+    @Column(name = "NU_MAXIMO_MESES")
+    private Integer nuMaximoMeses;
 
     @NotNull
-    public double vrMinimo;
+    @Column(name = "VR_MINIMO")
+    private double vrMinimo;
 
     @Nullable
-    public double vrMaximo;
+    @Column(name = "VR_MAXIMO")
+    private Double vrMaximo;
+
 }
