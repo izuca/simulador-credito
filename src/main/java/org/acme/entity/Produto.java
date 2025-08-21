@@ -1,66 +1,39 @@
 package org.acme.entity;
 
-import io.smallrye.common.constraint.NotNull;
-import io.smallrye.common.constraint.Nullable;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+import java.util.List;
 
-/**
- * Example JPA entity defined as a Panache Entity.
- * An ID field of Long type is provided, if you want to define your own ID field extends <code>PanacheEntityBase</code> instead.
- *
- * This uses the active record pattern, you can also use the repository pattern instead:
- * .
- *
- * Usage (more example on the documentation)
- *
- * {@code
- *     public void doSomething() {
- *         MyEntity entity1 = new MyEntity();
- *         entity1.field = "field-1";
- *         entity1.persist();
- *
- *         List<MyEntity> entities = MyEntity.listAll();
- *     }
- * }
- */
 @Getter
 @Setter
 @Entity
-@Table(name = "PRODUTO")
+@Table(name = "PRODUTO", schema = "dbo")
 public class Produto{
     @Id
-    @NotNull
-    @Column(name = "CO_PRODUTO")
+    @Column(name = "CO_PRODUTO", nullable = false)
     private Long coProduto;
 
-    @NotNull
-    @Column(name = "NO_PRODUTO")
+    @Column(name = "NO_PRODUTO", nullable = false)
     private String noProduto;
 
-    @NotNull
-    @Column(name = "PC_TAXA_JUROS")
-    private double pcTaxaJuros;
+    @Column(name = "PC_TAXA_JUROS", nullable = false, precision = 10, scale = 9)
+    private BigDecimal pcTaxaJuros;
 
-    @NotNull
-    @Column(name = "NU_MINIMO_MESES")
-    private int nuMinimoMeses;
+    @Column(name = "NU_MINIMO_MESES", nullable = false)
+    private Integer nuMinimoMeses;
 
-    @Nullable
     @Column(name = "NU_MAXIMO_MESES")
     private Integer nuMaximoMeses;
 
-    @NotNull
-    @Column(name = "VR_MINIMO")
-    private double vrMinimo;
+    @Column(name = "VR_MINIMO", nullable = false, precision = 18, scale = 2)
+    private BigDecimal vrMinimo;
 
-    @Nullable
-    @Column(name = "VR_MAXIMO")
-    private Double vrMaximo;
+    @Column(name = "VR_MAXIMO", precision = 18, scale = 2)
+    private BigDecimal vrMaximo;
 
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Simulacao> simulacoes;
 }
