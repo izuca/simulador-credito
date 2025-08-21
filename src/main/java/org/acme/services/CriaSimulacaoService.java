@@ -19,6 +19,9 @@ public class CriaSimulacaoService {
 
     public SimulacaoResponseDTO criaSimulacao(SimulacaoRequestDTO simulacaoRequestDTO){
         Simulacao simulacao = SimulacaoMapper.toEntity(simulacaoRequestDTO);
+        if (simulacao.getPrazo() == 0){
+            throw new IllegalArgumentException("O prazo não pode ser zero.");//devo adicionar um import?
+        }
         simulacao.setProduto(produtoRepository.buscaProdCorrespondente(simulacao));
         simulacaoRepository.persist(simulacao);
 
