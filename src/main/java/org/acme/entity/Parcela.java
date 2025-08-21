@@ -28,7 +28,7 @@ public class Parcela {
     @Column(name = "VR_JUROS", nullable = false, precision = 10, scale = 9)
     private BigDecimal valorJuros;
 
-    @Column(name = "VR_JUROS", nullable = false, precision = 18,scale = 2)
+    @Column(name = "VR_PRESTACAO", nullable = false, precision = 18,scale = 2)
     private BigDecimal valorPrestacao;
 
     @ManyToOne

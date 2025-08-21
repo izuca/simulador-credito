@@ -3,8 +3,7 @@ package org.acme.repository;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.acme.entity.Produto;
-
-import java.util.List;
+import org.acme.entity.Simulacao;
 
 @ApplicationScoped
 public class ProdutoRepository implements PanacheRepository<Produto> {
@@ -12,4 +11,7 @@ public class ProdutoRepository implements PanacheRepository<Produto> {
         return find("id", idProduto).firstResult();
     }
 
+    public Produto buscaProdCorrespondente(Simulacao simulacao) {
+        return find("nuMinimoMeses <= ?1 and vrMinimo <= ?2", simulacao.getPrazo(), simulacao.getValorDesejado()).firstResult();
+    }
 }
