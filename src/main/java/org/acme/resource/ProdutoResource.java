@@ -14,7 +14,6 @@ import org.acme.repository.ProdutoRepository;
 import org.acme.services.ProdutoService;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Path("/produto")
 @Produces(MediaType.APPLICATION_JSON)
@@ -25,14 +24,13 @@ public class ProdutoResource {
     @Inject
     ProdutoService produtoService;
 
-    @Inject
-    ProdutoMapper produtoMapper;
+
 
     @GET
     public Response listaProdutos(){
         var listProdutoDTO = new ArrayList<ProdutoDTO>();
         for (Produto produtoEntity : produtoRepository.listAll()) {
-            listProdutoDTO.add(produtoMapper.toDto(produtoEntity));
+            listProdutoDTO.add(ProdutoMapper.toDto(produtoEntity));
         }
        return Response.status(Response.Status.OK).entity(listProdutoDTO).build();
     }

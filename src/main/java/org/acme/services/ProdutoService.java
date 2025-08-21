@@ -12,12 +12,9 @@ public class ProdutoService {
     @Inject
     ProdutoRepository produtoRepository;
 
-    @Inject
-    ProdutoMapper produtoMapper;
-
     public ProdutoDTO buscarProdutoByID(Long id) {
         Produto produto = produtoRepository.buscaPorId(id);
-        return produtoMapper.toDto(produto);
+        return ProdutoMapper.toDto(produto);
     }
 
 }
