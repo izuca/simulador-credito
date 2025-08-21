@@ -1,5 +1,6 @@
 # simulador-credito
 Projeto do Caixaverso de Backend
+RODAR: quarkus extension add quarkus-smallrye-openapi
 
 ## Objetivos
 - Receber um envelope JSON, via chamadade API, contendo uma solicitação de simulação de empréstimo
