@@ -8,6 +8,7 @@ import org.acme.dto.mapper.SimulacaoMapper;
 import org.acme.entity.Simulacao;
 import org.acme.repository.ProdutoRepository;
 import org.acme.repository.SimulacaoRepository;
+import org.acme.exception.ParametroNuloException;
 
 @ApplicationScoped
 public class CriaSimulacaoService {
@@ -20,7 +21,9 @@ public class CriaSimulacaoService {
     public SimulacaoResponseDTO criaSimulacao(SimulacaoRequestDTO simulacaoRequestDTO){
         Simulacao simulacao = SimulacaoMapper.toEntity(simulacaoRequestDTO);
         if (simulacao.getPrazo() == 0){
-            throw new IllegalArgumentException("O prazo não pode ser zero.");//devo adicionar um import?
+            throw new ParametroNuloException("Prazo não pode ser zero");
+        } else if (simulacao.getValorDesejado() == 0){
+            throw new ParametroNuloException("Valor desejado não pode ser zero");
         }
         simulacao.setProduto(produtoRepository.buscaProdCorrespondente(simulacao));
         simulacaoRepository.persist(simulacao);
