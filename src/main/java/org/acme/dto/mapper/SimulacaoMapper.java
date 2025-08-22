@@ -22,7 +22,7 @@ public class SimulacaoMapper {
         simulacaoResponseDTO.setProdutoId(simulacao.getProduto().getCoProduto());
         simulacaoResponseDTO.setNoProduto(simulacao.getProduto().getNoProduto());
         simulacaoResponseDTO.setPcTaxaJuros(simulacao.getProduto().getPcTaxaJuros());
-        simulacaoResponseDTO.setDataHora(simulacao.getDataHora());
+        simulacaoResponseDTO.setResultadoSimulacaoDTOList(simulacao.getParcelas());//editar
 
         return simulacaoResponseDTO;
     }

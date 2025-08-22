@@ -10,6 +10,8 @@ import org.acme.repository.ProdutoRepository;
 import org.acme.repository.SimulacaoRepository;
 import org.acme.exception.ParametroNuloException;
 
+import java.math.BigDecimal;
+
 @ApplicationScoped
 public class CriaSimulacaoService {
     @Inject
@@ -18,14 +20,19 @@ public class CriaSimulacaoService {
     @Inject
     ProdutoRepository produtoRepository;
 
+    @Inject
+    ParcelaService parcelaService;
+
     public SimulacaoResponseDTO criaSimulacao(SimulacaoRequestDTO simulacaoRequestDTO){
-        Simulacao simulacao = SimulacaoMapper.toEntity(simulacaoRequestDTO);
-        if (simulacao.getPrazo() == 0){
+        if (simulacaoRequestDTO.getPrazo() == 0){
             throw new ParametroNuloException("Prazo não pode ser zero");
-        } else if (simulacao.getValorDesejado() == 0){
+        } else if (simulacaoRequestDTO.getValorDesejado().compareTo(BigDecimal.ZERO) == 0){
             throw new ParametroNuloException("Valor desejado não pode ser zero");
         }
+        Simulacao simulacao = SimulacaoMapper.toEntity(simulacaoRequestDTO);
         simulacao.setProduto(produtoRepository.buscaProdCorrespondente(simulacao));
+        //Logica Parcela
+        parcelaService.calculaSAC(simulacao);
         simulacaoRepository.persist(simulacao);
 
         return SimulacaoMapper.toResponseDTO(simulacao);

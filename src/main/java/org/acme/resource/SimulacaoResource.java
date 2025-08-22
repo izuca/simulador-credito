@@ -26,8 +26,7 @@ public class SimulacaoResource {
 
     @POST
     @Operation(summary = "Cria uma nova simulação", description = "Cria uma nova simulação com base nos dados fornecidos.")
-    @APIResponse(responseCode = "201", description = "Simulação criada com sucesso",
-                 content = @Content(mediaType = "application/json")
+    @APIResponse(responseCode = "201", description = "Simulação criada com sucesso", content = @Content(mediaType = "application/json"))
     @Transactional
     public Response criaSimulacao(SimulacaoRequestDTO simulacaoRequestDTO){
         SimulacaoResponseDTO simulacaoResponseDTO = criaSimulacaoService.criaSimulacao(simulacaoRequestDTO);
