@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -31,8 +32,8 @@ public class Simulacao {
     @JoinColumn(name = "CO_PRODUTO", nullable = false)
     private Produto produto;
 
-    @OneToMany(mappedBy = "simulacao", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Parcela> parcelas;
+    @OneToMany(mappedBy = "simulacao",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Parcela> parcelas = new ArrayList<>();
 
 
 }

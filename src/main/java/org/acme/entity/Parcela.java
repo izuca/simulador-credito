@@ -26,13 +26,13 @@ public class Parcela {
     @Column(name = "VR_AMORTIZACAO", nullable = false, precision = 18,scale = 2)
     private BigDecimal vrAmortizacao;
 
-    @Column(name = "VR_JUROS", nullable = false, precision = 10, scale = 9)
+    @Column(name = "VR_JUROS", nullable = false, precision = 18, scale = 2)
     private BigDecimal vrJuros;
 
     @Column(name = "VR_PRESTACAO", nullable = false, precision = 18,scale = 2)
     private BigDecimal vrPrestacao;
 
     @ManyToOne
-    @JoinColumn(name = "ID_SIMULACAO", nullable = false)
+    @JoinColumn(name = "ID_SIMULACAO")
     private Simulacao simulacao;
 }

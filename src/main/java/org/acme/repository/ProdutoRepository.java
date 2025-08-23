@@ -12,6 +12,9 @@ public class ProdutoRepository implements PanacheRepository<Produto> {
     }
 
     public Produto buscaProdCorrespondente(Simulacao simulacao) {
-        return find("nuMinimoMeses <= ?1 and vrMinimo <= ?2", simulacao.getPrazo(), simulacao.getValorDesejado()).firstResult();
+        return find("?1 between vrMinimo and coalesce(vrMaximo,?1) and ?2 between nuMinimoMeses and coalesce(nuMaximoMeses, ?2)"
+                ,simulacao.getValorDesejado()
+                ,simulacao.getPrazo()
+        ).firstResult();
     }
 }

@@ -5,7 +5,9 @@ import jakarta.inject.Inject;
 import org.acme.dto.ParcelaDTO;
 import org.acme.dto.SimulacaoRequestDTO;
 import org.acme.dto.SimulacaoResponseDTO;
+import org.acme.dto.mapper.ParcelaMapper;
 import org.acme.dto.mapper.SimulacaoMapper;
+import org.acme.entity.Parcela;
 import org.acme.entity.Simulacao;
 import org.acme.repository.ProdutoRepository;
 import org.acme.repository.SimulacaoRepository;
@@ -34,10 +36,10 @@ public class CriaSimulacaoService {
         Simulacao simulacao = SimulacaoMapper.toEntity(simulacaoRequestDTO);
         simulacao.setProduto(produtoRepository.buscaProdCorrespondente(simulacao));
 
-        List<ParcelaDTO> parcelasSAC = (parcelaService.calculaSAC(simulacao));
+        List<Parcela> parcelasSAC = (parcelaService.calculaSAC(simulacao));
         simulacaoRepository.persist(simulacao);
 
-
-        return SimulacaoMapper.toResponseDTO(simulacao,parcelasSAC);
+        List<ParcelaDTO> listaPacSac = ParcelaMapper.toDto(parcelasSAC);
+        return SimulacaoMapper.toResponseDTO(simulacao,listaPacSac);
     }
 }
