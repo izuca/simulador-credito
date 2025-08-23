@@ -37,9 +37,11 @@ public class CriaSimulacaoService {
         simulacao.setProduto(produtoRepository.buscaProdCorrespondente(simulacao));
 
         List<Parcela> parcelasSAC = (parcelaService.calculaSAC(simulacao));
+        List<Parcela> parcelaPRICE = (parcelaService.calculaPrice(simulacao));
         simulacaoRepository.persist(simulacao);
 
         List<ParcelaDTO> listaPacSac = ParcelaMapper.toDto(parcelasSAC);
-        return SimulacaoMapper.toResponseDTO(simulacao,listaPacSac);
+        List<ParcelaDTO> listaPacPrice = ParcelaMapper.toDto(parcelaPRICE);
+        return SimulacaoMapper.toResponseDTO(simulacao,listaPacSac, listaPacPrice);
     }
 }

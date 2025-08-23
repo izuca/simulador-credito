@@ -20,7 +20,7 @@ public class SimulacaoMapper {
         return simulacao;
     }
 
-    public static SimulacaoResponseDTO toResponseDTO(Simulacao simulacao, List<ParcelaDTO> parcelasSAC){
+    public static SimulacaoResponseDTO toResponseDTO(Simulacao simulacao, List<ParcelaDTO> parcelasSAC, List<ParcelaDTO> parcelasPRICE){
         SimulacaoResponseDTO simulacaoResponseDTO = new SimulacaoResponseDTO();
         List<ResultadoSimulacaoDTO> resultadoSimulacaoDTOList = new ArrayList<>();
 
@@ -28,6 +28,11 @@ public class SimulacaoMapper {
         resultadoSAC.setTipo("SAC");
         resultadoSAC.setParcelas(parcelasSAC);
         resultadoSimulacaoDTOList.add(resultadoSAC);
+
+        ResultadoSimulacaoDTO resultadoPRICE = new ResultadoSimulacaoDTO();
+        resultadoPRICE.setTipo("PRICE");
+        resultadoPRICE.setParcelas(parcelasPRICE);
+        resultadoSimulacaoDTOList.add(resultadoPRICE);
 
         simulacaoResponseDTO.setIdSimulacao(simulacao.getIdSimulacao());
         simulacaoResponseDTO.setProdutoId(simulacao.getProduto().getCoProduto());
