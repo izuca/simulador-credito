@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -28,7 +27,7 @@ public class SimulacaoResponseDTO {
     private BigDecimal pcTaxaJuros;
 
     @Schema(description = "Lista de resultados")
-    @JsonProperty("resultadoSimulacao")
+    @JsonProperty("resultadosSimulacao")
     private List<ResultadoSimulacaoDTO> resultadoSimulacaoDTOList;
 
 }

@@ -22,14 +22,15 @@ public class Parcela {
     @Column(name="NUMERO", nullable = false)
     private Integer numero;
 
+
     @Column(name = "VR_AMORTIZACAO", nullable = false, precision = 18,scale = 2)
     private BigDecimal vrAmortizacao;
 
     @Column(name = "VR_JUROS", nullable = false, precision = 10, scale = 9)
-    private BigDecimal valorJuros;
+    private BigDecimal vrJuros;
 
     @Column(name = "VR_PRESTACAO", nullable = false, precision = 18,scale = 2)
-    private BigDecimal valorPrestacao;
+    private BigDecimal vrPrestacao;
 
     @ManyToOne
     @JoinColumn(name = "ID_SIMULACAO", nullable = false)

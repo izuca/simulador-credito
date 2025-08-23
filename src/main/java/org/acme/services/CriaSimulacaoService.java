@@ -2,6 +2,7 @@ package org.acme.services;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.acme.dto.ParcelaDTO;
 import org.acme.dto.SimulacaoRequestDTO;
 import org.acme.dto.SimulacaoResponseDTO;
 import org.acme.dto.mapper.SimulacaoMapper;
@@ -11,6 +12,7 @@ import org.acme.repository.SimulacaoRepository;
 import org.acme.exception.ParametroNuloException;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @ApplicationScoped
 public class CriaSimulacaoService {
@@ -31,10 +33,11 @@ public class CriaSimulacaoService {
         }
         Simulacao simulacao = SimulacaoMapper.toEntity(simulacaoRequestDTO);
         simulacao.setProduto(produtoRepository.buscaProdCorrespondente(simulacao));
-        //Logica Parcela
-        parcelaService.calculaSAC(simulacao);
+
+        List<ParcelaDTO> parcelasSAC = (parcelaService.calculaSAC(simulacao));
         simulacaoRepository.persist(simulacao);
 
-        return SimulacaoMapper.toResponseDTO(simulacao);
+
+        return SimulacaoMapper.toResponseDTO(simulacao,parcelasSAC);
     }
 }

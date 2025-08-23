@@ -2,7 +2,6 @@ package org.acme.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.acme.entity.Parcela;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import java.util.List;
@@ -14,5 +13,5 @@ public class ResultadoSimulacaoDTO {
     @Schema(description = "Tipo de Amortização", examples = "SAC")
     private String tipo;
 
-    private List<Parcela> parcelas;
+    private List<ParcelaDTO> parcelas;
 }
