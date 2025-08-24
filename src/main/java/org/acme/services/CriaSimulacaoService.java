@@ -9,12 +9,13 @@ import org.acme.dto.mapper.ParcelaMapper;
 import org.acme.dto.mapper.SimulacaoMapper;
 import org.acme.entity.Parcela;
 import org.acme.entity.Simulacao;
+import org.acme.exception.ProdutoIncompativelException;
 import org.acme.repository.ProdutoRepository;
 import org.acme.repository.SimulacaoRepository;
-import org.acme.exception.ParametroNuloException;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class CriaSimulacaoService {
@@ -28,20 +29,22 @@ public class CriaSimulacaoService {
     ParcelaService parcelaService;
 
     public SimulacaoResponseDTO criaSimulacao(SimulacaoRequestDTO simulacaoRequestDTO){
-        if (simulacaoRequestDTO.getPrazo() == 0){
-            throw new ParametroNuloException("Prazo não pode ser zero");
-        } else if (simulacaoRequestDTO.getValorDesejado().compareTo(BigDecimal.ZERO) == 0){
-            throw new ParametroNuloException("Valor desejado não pode ser zero");
-        }
         Simulacao simulacao = SimulacaoMapper.toEntity(simulacaoRequestDTO);
         simulacao.setProduto(produtoRepository.buscaProdCorrespondente(simulacao));
+        if(simulacao.getProduto() == null){
+            throw new ProdutoIncompativelException("Esta Simulação não possui produto compativel");
+        }
 
         List<Parcela> parcelasSAC = (parcelaService.calculaSAC(simulacao));
         List<Parcela> parcelaPRICE = (parcelaService.calculaPrice(simulacao));
         simulacaoRepository.persist(simulacao);
 
-        List<ParcelaDTO> listaPacSac = ParcelaMapper.toDto(parcelasSAC);
-        List<ParcelaDTO> listaPacPrice = ParcelaMapper.toDto(parcelaPRICE);
+        List<ParcelaDTO> listaPacSac = parcelasSAC.stream()
+                .map(ParcelaMapper::toDto)
+                .collect(Collectors.toList());
+        List<ParcelaDTO> listaPacPrice = parcelaPRICE.stream()
+                .map(ParcelaMapper::toDto)
+                .collect(Collectors.toList());
         return SimulacaoMapper.toResponseDTO(simulacao,listaPacSac, listaPacPrice);
     }
 }

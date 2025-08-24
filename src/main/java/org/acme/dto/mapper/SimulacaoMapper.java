@@ -12,34 +12,35 @@ import java.util.List;
 
 public class SimulacaoMapper {
     public static Simulacao toEntity(SimulacaoRequestDTO simulacaoRequestDTO){
-        Simulacao simulacao = new Simulacao();
-
-        simulacao.setPrazo(simulacaoRequestDTO.getPrazo());
-        simulacao.setValorDesejado(simulacaoRequestDTO.getValorDesejado());
-
-        return simulacao;
+        return Simulacao.builder()
+                .prazo(simulacaoRequestDTO.getPrazo())
+                .valorDesejado(simulacaoRequestDTO.getValorDesejado())
+                .produto(null)
+                .parcelas(new ArrayList<>())
+                .build();
     }
 
     public static SimulacaoResponseDTO toResponseDTO(Simulacao simulacao, List<ParcelaDTO> parcelasSAC, List<ParcelaDTO> parcelasPRICE){
-        SimulacaoResponseDTO simulacaoResponseDTO = new SimulacaoResponseDTO();
         List<ResultadoSimulacaoDTO> resultadoSimulacaoDTOList = new ArrayList<>();
 
-        ResultadoSimulacaoDTO resultadoSAC = new ResultadoSimulacaoDTO();
-        resultadoSAC.setTipo("SAC");
-        resultadoSAC.setParcelas(parcelasSAC);
+        ResultadoSimulacaoDTO resultadoSAC = ResultadoSimulacaoDTO.builder()
+                .tipo("SAC")
+                .parcelas(parcelasSAC)
+                .build();
         resultadoSimulacaoDTOList.add(resultadoSAC);
 
-        ResultadoSimulacaoDTO resultadoPRICE = new ResultadoSimulacaoDTO();
-        resultadoPRICE.setTipo("PRICE");
-        resultadoPRICE.setParcelas(parcelasPRICE);
+        ResultadoSimulacaoDTO resultadoPRICE = ResultadoSimulacaoDTO.builder()
+                .tipo("PRICE")
+                .parcelas(parcelasPRICE)
+                .build();
         resultadoSimulacaoDTOList.add(resultadoPRICE);
 
-        simulacaoResponseDTO.setIdSimulacao(simulacao.getIdSimulacao());
-        simulacaoResponseDTO.setProdutoId(simulacao.getProduto().getCoProduto());
-        simulacaoResponseDTO.setNoProduto(simulacao.getProduto().getNoProduto());
-        simulacaoResponseDTO.setPcTaxaJuros(simulacao.getProduto().getPcTaxaJuros());
-        simulacaoResponseDTO.setResultadoSimulacaoDTOList(resultadoSimulacaoDTOList);
-
-        return simulacaoResponseDTO;
+        return SimulacaoResponseDTO.builder()
+                .idSimulacao(simulacao.getIdSimulacao())
+                .produtoId(simulacao.getProduto().getCoProduto())
+                .noProduto(simulacao.getProduto().getNoProduto())
+                .pcTaxaJuros(simulacao.getProduto().getPcTaxaJuros())
+                .resultadoSimulacaoDTOList(resultadoSimulacaoDTOList)
+                .build();
     }
 }

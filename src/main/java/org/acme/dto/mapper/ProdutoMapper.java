@@ -5,11 +5,10 @@ import org.acme.entity.Produto;
 
 public class ProdutoMapper {
     public static ProdutoDTO toDto(Produto produto){
-        ProdutoDTO produtoDTO = new ProdutoDTO();
+        return ProdutoDTO.builder()
+                .coProduto(produto.getCoProduto())
+                .noProduto(produto.getNoProduto())
+                .build();
 
-        produtoDTO.setCoProduto(produto.getCoProduto());
-        produtoDTO.setNoProduto(produto.getNoProduto());
-
-        return produtoDTO;
     }
 }

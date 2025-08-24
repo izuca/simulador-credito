@@ -4,15 +4,15 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
 import org.acme.dto.ErrorResponseDTO;
-import org.acme.exception.ProdutoNaoEncontradoException;
+import org.acme.exception.ProdutoIncompativelException;
 
 @Provider
-public class ProdutoNaoEncontradoHandler implements ExceptionMapper<ProdutoNaoEncontradoException> {
+public class ProdutoIncompativelHandler implements ExceptionMapper<ProdutoIncompativelException> {
     @Override
-    public Response toResponse(ProdutoNaoEncontradoException e) {
-        return Response.status(Response.Status.NOT_FOUND)
+    public Response toResponse(ProdutoIncompativelException e) {
+        return Response.status(Response.Status.BAD_REQUEST)
                 .entity(ErrorResponseDTO.builder()
-                        .codigoHttp(404)
+                        .codigoHttp(400)
                         .mensagem(e.getMessage())
                         .build())
                 .build();

@@ -1,13 +1,15 @@
 package org.acme.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import java.util.List;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Schema(name = "Resultado Simulacao DTO", description = "DTO de resultado da simulacao")
 public class ResultadoSimulacaoDTO {
     @Schema(description = "Tipo de Amortização", examples = "SAC")

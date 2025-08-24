@@ -23,17 +23,18 @@ public class ParcelaService {
         BigDecimal amortizacaoFixa = vrAmortizacaoTotal.divide(BigDecimal.valueOf(qtdParcelas), 2, RoundingMode.HALF_UP);
 
         for (int i = 1; i <= qtdParcelas; i++) {
-            Parcela parcela = new Parcela();
 
             BigDecimal juros = taxaJuros.multiply(saldoDevedor).setScale(2, RoundingMode.HALF_UP);
             BigDecimal prestacao = amortizacaoFixa.add(juros);
 
-            parcela.setTipo("SAC");
-            parcela.setNumero(i);
-            parcela.setVrAmortizacao(amortizacaoFixa);
-            parcela.setVrJuros(juros);
-            parcela.setVrPrestacao(prestacao);
-            parcela.setSimulacao(simulacao);
+            Parcela parcela = Parcela.builder()
+                    .tipo("SAC")
+                    .numero(i)
+                    .vrAmortizacao(amortizacaoFixa)
+                    .vrJuros(juros)
+                    .vrPrestacao(prestacao)
+                    .simulacao(simulacao)
+                    .build();
             saldoDevedor = saldoDevedor.subtract(parcela.getVrAmortizacao());
 
             simulacao.getParcelas().add(parcela);
@@ -63,17 +64,17 @@ public class ParcelaService {
         BigDecimal prestacao = vrAmortizacaoTotal.multiply(coeficiente).setScale(2, RoundingMode.DOWN);
 
         for (int i = 1; i <= qtdParcelas; i++) {
-            Parcela parcela = new Parcela();
-
             BigDecimal juros = taxaJuros.multiply(saldoDevedor).setScale(2, RoundingMode.HALF_UP);
             BigDecimal amortizacaoAtual = prestacao.subtract(juros);
 
-            parcela.setTipo("PRICE");
-            parcela.setNumero(i);
-            parcela.setVrAmortizacao(amortizacaoAtual);
-            parcela.setVrJuros(juros);
-            parcela.setVrPrestacao(prestacao);
-            parcela.setSimulacao(simulacao);
+            Parcela parcela = Parcela.builder()
+                    .tipo("PRICE")
+                    .numero(i)
+                    .vrAmortizacao(amortizacaoAtual)
+                    .vrJuros(juros)
+                    .vrPrestacao(prestacao)
+                    .simulacao(simulacao)
+                    .build();
             saldoDevedor = saldoDevedor.subtract(parcela.getVrAmortizacao());
 
             simulacao.getParcelas().add(parcela);

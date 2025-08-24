@@ -1,14 +1,16 @@
 package org.acme.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Schema(name = "Simulacao Response", description = "DTO de resposta para simulação")
 public class SimulacaoResponseDTO {
     @Schema(description = "ID da simulação", examples = "1")

@@ -1,11 +1,13 @@
 package org.acme.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Schema(name = "Erro Response", description = "Mensagem de Erro Padrão")
 public class ErrorResponseDTO {
     @Schema(description = "Código HTTP do Erro", example = "400")
@@ -14,8 +16,4 @@ public class ErrorResponseDTO {
     @Schema(description = "Mensagem de Erro", example = "Parâmetro X não pode ser nulo")
     private String mensagem;
 
-    public ErrorResponseDTO(int codigoHttp, String mensagem) {
-        this.codigoHttp = codigoHttp;
-        this.mensagem = mensagem;
-    }
 }
