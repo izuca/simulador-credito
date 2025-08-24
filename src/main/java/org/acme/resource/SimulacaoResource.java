@@ -3,15 +3,13 @@ package org.acme.resource;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.validation.constraints.Min;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.acme.dto.SimulacaoRequestDTO;
-import org.acme.dto.SimulacaoResponseDTO;
+import org.acme.dto.CriaSimulacaoRequestDTO;
 import org.acme.services.CriaSimulacaoService;
+import org.acme.services.ListaSimulacaoService;
 import org.eclipse.microprofile.openapi.annotations.*;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
@@ -23,12 +21,27 @@ public class SimulacaoResource {
     @Inject
     CriaSimulacaoService criaSimulacaoService;
 
+    @Inject
+    ListaSimulacaoService listaSimulacaoService;
+
+    @GET
+    @Operation(summary = "Listar simulações", description = "Lista simulações com paginação e quantidade de registros por página")
+    @APIResponse(responseCode = "200", content = @Content(mediaType = "application/json"))
+    public Response listarSimulacoes(@QueryParam("pagina") @DefaultValue("1") @Min(1) int pagina,
+                                     @QueryParam("qtdRegistrosPagina") @DefaultValue("50") int qtdRegistrosPagina) {
+
+        return Response.status(Response.Status.OK)
+                .entity(listaSimulacaoService.listarSimulacoes(pagina,qtdRegistrosPagina))
+                .build();
+    }
+
     @POST
-    @Operation(summary = "Cria uma nova simulação", description = "Cria uma nova simulação com base nos dados fornecidos.")
+    @Operation(summary = "Criar simulação", description = "Cria uma nova simulação com base nos dados fornecidos.")
     @APIResponse(responseCode = "201", description = "Simulação criada com sucesso", content = @Content(mediaType = "application/json"))
     @Transactional
-    public Response criaSimulacao(@Valid SimulacaoRequestDTO simulacaoRequestDTO){
-        SimulacaoResponseDTO simulacaoResponseDTO = criaSimulacaoService.criaSimulacao(simulacaoRequestDTO);
-        return Response.status(Response.Status.CREATED).entity(simulacaoResponseDTO).build();
+    public Response criaSimulacao(@Valid CriaSimulacaoRequestDTO criaSimulacaoRequestDTO){
+        return Response.status(Response.Status.CREATED)
+                .entity(criaSimulacaoService.criaSimulacao(criaSimulacaoRequestDTO))
+                .build();
     }
 }

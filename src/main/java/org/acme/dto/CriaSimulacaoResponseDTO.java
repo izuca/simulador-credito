@@ -11,8 +11,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Schema(name = "Simulacao Response", description = "DTO de resposta para simulação")
-public class SimulacaoResponseDTO {
+@Schema(name = "Cria Simulacao Response", description = "DTO de resposta para criação de simulação")
+public class CriaSimulacaoResponseDTO {
     @Schema(description = "ID da simulação", examples = "1")
     private Long idSimulacao;
 

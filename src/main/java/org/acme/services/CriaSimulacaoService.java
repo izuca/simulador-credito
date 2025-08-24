@@ -3,8 +3,8 @@ package org.acme.services;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.acme.dto.ParcelaDTO;
-import org.acme.dto.SimulacaoRequestDTO;
-import org.acme.dto.SimulacaoResponseDTO;
+import org.acme.dto.CriaSimulacaoRequestDTO;
+import org.acme.dto.CriaSimulacaoResponseDTO;
 import org.acme.dto.mapper.ParcelaMapper;
 import org.acme.dto.mapper.SimulacaoMapper;
 import org.acme.entity.Parcela;
@@ -13,7 +13,6 @@ import org.acme.exception.ProdutoIncompativelException;
 import org.acme.repository.ProdutoRepository;
 import org.acme.repository.SimulacaoRepository;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,8 +27,8 @@ public class CriaSimulacaoService {
     @Inject
     ParcelaService parcelaService;
 
-    public SimulacaoResponseDTO criaSimulacao(SimulacaoRequestDTO simulacaoRequestDTO){
-        Simulacao simulacao = SimulacaoMapper.toEntity(simulacaoRequestDTO);
+    public CriaSimulacaoResponseDTO criaSimulacao(CriaSimulacaoRequestDTO criaSimulacaoRequestDTO){
+        Simulacao simulacao = SimulacaoMapper.toEntity(criaSimulacaoRequestDTO);
         simulacao.setProduto(produtoRepository.buscaProdCorrespondente(simulacao));
         if(simulacao.getProduto() == null){
             throw new ProdutoIncompativelException("Esta Simulação não possui produto compativel");

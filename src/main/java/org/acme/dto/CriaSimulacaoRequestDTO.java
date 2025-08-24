@@ -12,15 +12,15 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Schema(name = "Simulacao Request", description = "DTO para requisição de simulação de empréstimo")
-public class SimulacaoRequestDTO {
+@Schema(name = "Cria Simulacao Request", description = "DTO para requisição de criação simulação de empréstimo")
+public class CriaSimulacaoRequestDTO {
     @NotNull(message = "Valor desejado é obrigatório")
     @DecimalMin(value = "0.01", message = "Valor desejado deve ser maior que zero")
-    @Schema(description = "Valor desejado para o empréstimo", example = "10000.00", required = true)
+    @Schema(description = "Valor desejado para o empréstimo", examples = "10000.00", required = true)
     private BigDecimal valorDesejado;
 
     @NotNull(message = "Prazo é obrigatório")
     @Positive(message = "Prazo deve ser maior que zero")
-    @Schema(description = "Prazo em meses para pagamento do empréstimo", example = "24", required = true)
+    @Schema(description = "Prazo em meses para pagamento do empréstimo", examples = "24", required = true)
     private Integer prazo;
 }

@@ -1,26 +1,25 @@
 package org.acme.dto.mapper;
 
-import org.acme.dto.ParcelaDTO;
-import org.acme.dto.ResultadoSimulacaoDTO;
-import org.acme.dto.SimulacaoRequestDTO;
-import org.acme.dto.SimulacaoResponseDTO;
+import org.acme.dto.*;
+import org.acme.entity.Parcela;
 import org.acme.entity.Simulacao;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class SimulacaoMapper {
-    public static Simulacao toEntity(SimulacaoRequestDTO simulacaoRequestDTO){
+    public static Simulacao toEntity(CriaSimulacaoRequestDTO criaSimulacaoRequestDTO){
         return Simulacao.builder()
-                .prazo(simulacaoRequestDTO.getPrazo())
-                .valorDesejado(simulacaoRequestDTO.getValorDesejado())
+                .prazo(criaSimulacaoRequestDTO.getPrazo())
+                .valorDesejado(criaSimulacaoRequestDTO.getValorDesejado())
                 .produto(null)
                 .parcelas(new ArrayList<>())
                 .build();
     }
 
-    public static SimulacaoResponseDTO toResponseDTO(Simulacao simulacao, List<ParcelaDTO> parcelasSAC, List<ParcelaDTO> parcelasPRICE){
+    public static CriaSimulacaoResponseDTO toResponseDTO(Simulacao simulacao, List<ParcelaDTO> parcelasSAC, List<ParcelaDTO> parcelasPRICE){
         List<ResultadoSimulacaoDTO> resultadoSimulacaoDTOList = new ArrayList<>();
 
         ResultadoSimulacaoDTO resultadoSAC = ResultadoSimulacaoDTO.builder()
@@ -35,12 +34,29 @@ public class SimulacaoMapper {
                 .build();
         resultadoSimulacaoDTOList.add(resultadoPRICE);
 
-        return SimulacaoResponseDTO.builder()
+        return CriaSimulacaoResponseDTO.builder()
                 .idSimulacao(simulacao.getIdSimulacao())
                 .produtoId(simulacao.getProduto().getCoProduto())
                 .noProduto(simulacao.getProduto().getNoProduto())
                 .pcTaxaJuros(simulacao.getProduto().getPcTaxaJuros())
                 .resultadoSimulacaoDTOList(resultadoSimulacaoDTOList)
+                .build();
+    }
+
+    public static RegistroDTO toRegistro(Simulacao simulacao) {
+        return RegistroDTO.builder()
+                .idSimulacao(simulacao.getIdSimulacao())
+                .valorDesejado(simulacao.getValorDesejado())
+                .prazo(simulacao.getPrazo())
+                .valorTotalParcelasSAC(simulacao.getParcelas().stream()
+                        .filter(p ->"SAC".equals(p.getTipo()))
+                        .map(Parcela::getVrPrestacao)
+                        .reduce(BigDecimal.ZERO,BigDecimal::add)
+                )
+                .valorTotalParcelasPrice(simulacao.getParcelas().stream()
+                        .filter(p ->"PRICE".equals(p.getTipo()))
+                        .map(Parcela::getVrPrestacao)
+                        .reduce(BigDecimal.ZERO,BigDecimal::add))
                 .build();
     }
 }
