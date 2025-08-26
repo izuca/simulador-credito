@@ -2,12 +2,12 @@ package org.acme.services;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.WebApplicationException;
 import org.acme.dto.VolumeSimuladoProdutoDTO;
 import org.acme.dto.VolumeSimuladoResponseDTO;
 import org.acme.dto.mapper.SimulacaoMapper;
 import org.acme.entity.Parcela;
 import org.acme.entity.Simulacao;
+import org.acme.exception.DataInvalidaException;
 import org.acme.repository.SimulacaoRepository;
 
 import java.math.BigDecimal;
@@ -29,7 +29,7 @@ public class VolumeSimuladoService {
         try {
             data = LocalDate.parse(dataReferencia);
         } catch (DateTimeParseException e){
-            throw new WebApplicationException("Data invalida. Use o formato yyyy-MM-dd.", 400);
+            throw new DataInvalidaException("Data invalida. Use o formato yyyy-MM-dd.");
         }
 
         List<Simulacao> simulacaoList = simulacaoRepository.buscarPorData(data);
