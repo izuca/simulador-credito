@@ -59,4 +59,16 @@ public class SimulacaoMapper {
                         .reduce(BigDecimal.ZERO,BigDecimal::add))
                 .build();
     }
+
+    public static VolumeSimuladoProdutoDTO toVolumeDTO(Simulacao simulacao,BigDecimal mediaPrestacoes ,BigDecimal somaValorDesejado, BigDecimal somaPrice, BigDecimal somaSAC) {
+        return  VolumeSimuladoProdutoDTO.builder()
+                .codigoProduto(simulacao.getProduto().getCoProduto())
+                .descricaoProduto(simulacao.getProduto().getNoProduto())
+                .taxaMediaJuro(simulacao.getProduto().getPcTaxaJuros())
+                .valorMedioPrestacao(mediaPrestacoes)
+                .valorTotalDesejado(somaValorDesejado)
+                .valorTotalCreditoPrice(somaPrice)
+                .valorTotalCreditoSAC(somaSAC)
+                .build();
+    }
 }
