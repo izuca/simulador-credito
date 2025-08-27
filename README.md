@@ -1,92 +1,116 @@
-# simulador-credito
-Projeto do Caixaverso de Backend
-RODAR: quarkus extension add quarkus-smallrye-openapi
+# 📊 Simulador de Crédito - Hackathon Caixa
 
-## Objetivos
-- Receber um envelope JSON, via chamadade API, contendo uma solicitação de simulação de empréstimo
-- Consultar um conjunto de informações  parametrizadas em uma tabela de banco de dados SQL Server
-- Validar os dados de entrada da API com base nos parâmetros de produtos retornados no banco de dados.
-- Filtrar qual produto se adequa aos parâmetros de entrada
-- Retornar cálculos para os sistemas de amortização SAC e PRICE de acordo com dados validados
-- Retornar um envelope JSON contendo o nome do produto valido, e o resultado da simulação utilizando dois sistemas de amortização (SAC e PRICE), gravando este mesmo envelope JSON no EventHub. A Gravação no Eventhub visa simular uma possibilidade de integração com a área de relacionamento com o cliente da empresa, que receberia em poucos segundos este evento de simulação, e estaria apta à execução de estratégia negocial com base na interação do cliente
-- persistir em banco local a simulação realizada
-- Criar um endpoint para retornar todas as simulações realizadas
-- Criar um endpoint para retornar os valores simulados para cada produto em cada dia
-- Criar um endpoint para retornar dados de telemetria com volumes e tempos de resposta para cada serviço
-- Disponibilizar o código fonte, com todas as evidência em .zip
-- Incluir no projeto todos os arquivos para execução via container(dockerfile/ Docker Compose)
+Projeto desenvolvido durante o **Hackathon Caixa** com foco em **backend** utilizando [Quarkus](https://quarkus.io/), **Java 21**, **Docker** e **PostgreSQL**.  
+O sistema expõe endpoints para **simulação de crédito**, **volumetria** e **telemetria de APIs**, com integração via **EventHub** (emulador/azure).
 
-## Inicializando o projeto
+---
 
-## Running the application in dev mode
+## ✅ Objetivos do Projeto
 
-You can run your application in dev mode that enables live coding using:
+- [x] Receber um envelope JSON, via chamada de API, contendo uma solicitação de simulação de empréstimo
+- [ ] Consultar um conjunto de informações parametrizadas em uma tabela de banco de dados SQL Server
+- [x] Validar os dados de entrada da API com base nos parâmetros de produtos retornados no banco de dados
+- [x] Filtrar qual produto se adequa aos parâmetros de entrada
+- [x] Retornar cálculos para os sistemas de amortização **SAC** e **PRICE** de acordo com dados validados
+- [x] Retornar um envelope JSON contendo o nome do produto válido e o resultado da simulação utilizando dois sistemas de amortização (**SAC** e **PRICE**), gravando este mesmo envelope JSON no **EventHub**
+- [x] Persistir em banco local a simulação realizada
+- [x] Criar um endpoint para retornar todas as simulações realizadas
+- [x] Criar um endpoint para retornar os valores simulados para cada produto em cada dia
+- [x] Criar um endpoint para retornar dados de telemetria com volumes e tempos de resposta para cada serviço
+- [x] Disponibilizar o código fonte, com todas as evidências em `.zip`
+- [x] Incluir no projeto todos os arquivos para execução via container (**Dockerfile / Docker Compose**)
 
-```shell script
-./mvnw quarkus:dev
+---
+
+## 🚀 Tecnologias Utilizadas
+- **Java 21**
+- **Quarkus** (RESTEasy, Panache ORM, Hibernate, Micrometer)
+- **Maven**
+- **Docker & Docker Compose**
+- **PostgreSQLr**
+- **EventHub Emulator**
+- **Postman / Swagger UI** para testes
+
+---
+
+## 📂 Estrutura do Projeto
+```
+src/main/java/org/acme  
++-- dto/                -> Objetos de transferência de dados
++-- entity/             -> Entidades JPA
++-- exception/          -> Tratamento de Erros
++-- repository/         -> Acesso a Dados(Panache)
++-- resource/           -> Endpoints REST 
++-- services/           -> Regras de negócio
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
+## ⚙️ Como Rodar o Projeto
 
-## Packaging and running the application
+### 1. Pré-requisitos
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- [Java 21 (GraalVM ou OpenJDK)](https://adoptium.net/)
+- [Maven](https://maven.apache.org/)
 
-The application can be packaged using:
+### 2. Renomeie o env.example para .env
+Por se tratar de um banco de dados local e o tempo foi escasso(sou leigo), tive que deixar a senha do banco de dados disponibilizada nesse env.example
 
-```shell script
-./mvnw package
+### 3. Subir banco de dados, pgadmin e emulador do eventHubs
+```bash
+docker-compose up -d
+```
+### 4. Rodar aplicação Quarkus em dev
+```bash
+# No diretório do projeto
+mvn quarkus:dev
+```
+A aplicação estará disponível em: http://localhost:8080
+
+### 5. Acessando o PGAdmin
+- Acesse http://localhost:5050/
+- Entre com as seguintes credenciais
+- Email: admin@admin.com
+- Senha: admin
+- Clique em Add New 
+![addServer.jpg](images/addServer.jpg)
+- Adicione o nome da sua conexão: simuladorcredito
+![img.png](images/img.png)
+- Na aba Connection insira:
+  - Host name/address: postgres
+  - Port: 5432
+  - Username: postgres(nome do container)
+  - Password: H@ckC@ixa (ou o mesmo que você colocou no .env)
+  ![img_1.png](images/img_1.png)
+- Ainda na mesma aba, clique em Save
+
+
+## 📌 Endpoints Principais
+
+### 📈 Relatórios de Telemetria
+```
+http://localhost:8080/simulador-credito/v1/relatorios/telemetria
 ```
 
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
-
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
-
-If you want to build an _über-jar_, execute the following command:
-
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
+### 📊 Volumetria de Simulações
+```
+http://localhost:8080/simulador-credito/v1/relatorios?dataReferencia=2025-08-22
+```
+### 📝 Criar e Listar Simulações
+```
+http://localhost:8080/simulador-credito/v1/simulacoes
 ```
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
+## ➕ Endpoints adicionais
 
-## Creating a native executable
-
-You can create a native executable using:
-
-```shell script
-./mvnw package -Dnative
+### Swagger UI(Documentação)
+```
+http://localhost:8080/swagger-ui
 ```
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
-
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
+### Dev UI
 ```
-
-You can then execute your native executable with: `./target/simulador-credito-1.0.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
-
-## Related Guides
-
-- REST ([guide](https://quarkus.io/guides/rest)): A Jakarta REST implementation utilizing build time processing and Vert.x. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it.
-- REST Jackson ([guide](https://quarkus.io/guides/rest#json-serialisation)): Jackson serialization support for Quarkus REST. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it
-- Hibernate ORM with Panache ([guide](https://quarkus.io/guides/hibernate-orm-panache)): Simplify your persistence code for Hibernate ORM via the active record or the repository pattern
-- JDBC Driver - PostgreSQL ([guide](https://quarkus.io/guides/datasource)): Connect to the PostgreSQL database via JDBC
-
-## Provided Code
-
-### Hibernate ORM
-
-Create your first JPA entity
-
-[Related guide section...](https://quarkus.io/guides/hibernate-orm)
-
-[Related Hibernate with Panache section...](https://quarkus.io/guides/hibernate-orm-panache)
-
-
-### REST
-
-Easily start your REST Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+http://localhost:8080/simulador-credito/v1/q/dev-ui
+```
+### Metricas
+```
+http://localhost:8080/simulador-credito/v1/q/metrics
+```
