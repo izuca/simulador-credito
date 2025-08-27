@@ -14,28 +14,34 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "SIMULACAO" , schema = "dbo")
+@Table(name = "simulacao")
 public class Simulacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_SIMULACAO")
+    @Column(name = "id_simulacao")
     private Long idSimulacao;
 
-    @Column(name = "VALOR_DESEJADO", nullable = false, precision = 18, scale = 2)
+    @Column(name = "vr_desejado", nullable = false, precision = 18, scale = 2)
     private BigDecimal valorDesejado;
 
-    @Column(name = "PRAZO", nullable = false)
+    @Column(name = "prazo", nullable = false)
     private Integer prazo;
 
-    @Column(name = "DATA_HORA")
-    private LocalDateTime dataHora = LocalDateTime.now();
+    @Column(name = "data_hora")
+    private LocalDateTime dataHora;
 
     @ManyToOne
-    @JoinColumn(name = "CO_PRODUTO", nullable = false)
+    @JoinColumn(name = "co_produto", nullable = false)
     private Produto produto;
 
     @OneToMany(mappedBy = "simulacao",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Parcela> parcelas = new ArrayList<>();
 
+    @PrePersist
+    public void prePersist() {
+        if (dataHora == null) {
+            dataHora = LocalDateTime.now();
+        }
+    }
 
 }

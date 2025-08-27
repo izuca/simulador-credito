@@ -11,30 +11,30 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "PARCELA", schema = "dbo")
+@Table(name = "parcela")
 public class Parcela {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_PARCELA")
+    @Column(name = "id_parcela")
     private Long idParcela;
 
-    @Column(name="TIPO", nullable = false)
+    @Column(name="tipo", nullable = false)
     private String tipo;
 
-    @Column(name="NUMERO", nullable = false)
+    @Column(name="numero", nullable = false)
     private Integer numero;
 
 
-    @Column(name = "VR_AMORTIZACAO", nullable = false, precision = 18,scale = 2)
+    @Column(name = "vr_amortizacao", nullable = false, precision = 18,scale = 2)
     private BigDecimal vrAmortizacao;
 
-    @Column(name = "VR_JUROS", nullable = false, precision = 18, scale = 2)
+    @Column(name = "vr_juros", nullable = false, precision = 18, scale = 2)
     private BigDecimal vrJuros;
 
-    @Column(name = "VR_PRESTACAO", nullable = false, precision = 18,scale = 2)
+    @Column(name = "vr_prestacao", nullable = false, precision = 18,scale = 2)
     private BigDecimal vrPrestacao;
 
     @ManyToOne
-    @JoinColumn(name = "ID_SIMULACAO")
+    @JoinColumn(name = "id_simulacao")
     private Simulacao simulacao;
 }

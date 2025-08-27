@@ -2,6 +2,7 @@ package org.acme.repository;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.PrePersist;
 import org.acme.entity.Simulacao;
 
 import java.time.LocalDate;
@@ -10,6 +11,8 @@ import java.util.List;
 
 @ApplicationScoped
 public class SimulacaoRepository implements PanacheRepository<Simulacao> {
+
+
     public List<Simulacao> buscarPorData(LocalDate dataReferencia) {
         LocalDateTime dtInicio = dataReferencia.atStartOfDay();
         LocalDateTime dtFim = dataReferencia.atTime(23, 59, 59);

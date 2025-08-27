@@ -12,28 +12,28 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "PRODUTO", schema = "dbo")
+@Table(name = "produto")
 public class Produto{
     @Id
-    @Column(name = "CO_PRODUTO", nullable = false)
+    @Column(name = "co_produto", nullable = false)
     private Long coProduto;
 
-    @Column(name = "NO_PRODUTO", nullable = false)
+    @Column(name = "no_produto", nullable = false)
     private String noProduto;
 
-    @Column(name = "PC_TAXA_JUROS", nullable = false, precision = 10, scale = 9)
+    @Column(name = "pc_taxa_juros", nullable = false, precision = 10, scale = 9)
     private BigDecimal pcTaxaJuros;
 
-    @Column(name = "NU_MINIMO_MESES", nullable = false)
+    @Column(name = "nu_minimo_meses", nullable = false)
     private Integer nuMinimoMeses;
 
-    @Column(name = "NU_MAXIMO_MESES")
+    @Column(name = "nu_maximo_meses")
     private Integer nuMaximoMeses;
 
-    @Column(name = "VR_MINIMO", nullable = false, precision = 18, scale = 2)
+    @Column(name = "vr_minimo", nullable = false, precision = 18, scale = 2)
     private BigDecimal vrMinimo;
 
-    @Column(name = "VR_MAXIMO", precision = 18, scale = 2)
+    @Column(name = "vr_maximo", precision = 18, scale = 2)
     private BigDecimal vrMaximo;
 
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
