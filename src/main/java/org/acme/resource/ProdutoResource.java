@@ -14,11 +14,13 @@ import org.acme.services.ProdutoService;
 import org.eclipse.microprofile.openapi.annotations.*;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 
 import java.util.stream.Collectors;
 
 @Path("/produtos")
+@Tag(name = "Produtos", description = "Endpoints utilizados para a consulta de produtos")
 @Produces(MediaType.APPLICATION_JSON)
 public class ProdutoResource {
     @Inject

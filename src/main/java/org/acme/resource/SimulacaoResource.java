@@ -13,8 +13,10 @@ import org.acme.services.ListaSimulacaoService;
 import org.eclipse.microprofile.openapi.annotations.*;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 @Path("/simulacoes")
+@Tag(name = "Simulações", description = "Endpoints utilizados para a manipulação de simulações")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class SimulacaoResource {

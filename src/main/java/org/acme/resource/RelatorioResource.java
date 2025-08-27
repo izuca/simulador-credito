@@ -9,8 +9,10 @@ import org.acme.services.VolumeSimuladoService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 @Path("/relatorios")
+@Tag(name = "Relatórios", description = "Endpoints utilizados para a consulta de Volumetria e Telemetria")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class RelatorioResource {
