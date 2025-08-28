@@ -48,7 +48,7 @@ src/main/java/org/acme
 
 ### 1. Pré-requisitos
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-- [Java 21 (GraalVM ou OpenJDK)](https://adoptium.net/)
+- [Java 21 (GraalVM ou OpenJDK)](https://www.graalvm.org/downloads/#)
 - [Maven](https://maven.apache.org/)
 
 ### 2. Renomeie o env.example para .env
@@ -58,7 +58,7 @@ Por se tratar de um banco de dados local e o tempo foi escasso(sou leigo), tive 
 ```bash
 docker-compose up -d
 ```
-### 4. Rodar aplicação Quarkus em dev
+### 4. Rodar aplicação Quarkus em dev(Apenas se o a aplicação do docker não rodar)
 ```bash
 # No diretório do projeto
 mvn quarkus:dev

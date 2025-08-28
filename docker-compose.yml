@@ -59,6 +59,21 @@ services:
       eh-emulator:
         aliases:
           - "azurite"
+  simulador-credito:
+    image: izuca/simuladorcredito:latest
+    container_name: simulador-credito
+    environment:
+      - QUARKUS_DATASOURCE_URL=jdbc:postgresql://postgres:5432/simuladorcredito
+      - QUARKUS_DATASOURCE_USERNAME=postgres
+      - QUARKUS_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - emulator
+    networks:
+      - simulador-net
+      - eh-emulator
 networks:
   simulador-net:
     driver: bridge
